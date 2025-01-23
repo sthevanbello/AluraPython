@@ -1,5 +1,7 @@
 import os
 
+lista_restaurantes = []
+
 def exibir_titulo():
     print('''
 ░██████╗░█████╗░██████╗░░█████╗░██████╗░  ███████╗██╗░░██╗██████╗░██████╗░███████╗░██████╗░██████╗
@@ -22,10 +24,42 @@ def exibir_menu():
 
 def opcao_invalida():
     print(f'Opção inválida')
-    input(f'Aperte Enter para voltar ao menu inicial')
+    voltar_menu_inicial()
+
+
+def cadastrar_restaurante():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    exibir_titulo()
+    print('\nCadastro de restaurante\n')
+    print('*'*50)
+    restaurante = input('\nDigite o nome do restaurante: ')
+    lista_restaurantes.append(restaurante)
+    if len(lista_restaurantes) > 0:
+        print('\nRestaurante cadastrado com sucesso!\n')
+        voltar_menu_inicial()
+    else:
+        print('Tente novamente')
+        cadastrar_restaurante()
+
+def voltar_menu_inicial():
+    print('*'*50)
+    input(f'\nAperte Enter para voltar ao menu inicial')
     main()
 
+def listar_restaurantes():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    exibir_titulo()
+    print('*'*50)
+    print('Restaurantes cadastrados')
+    print('-'*50)
+    if len(lista_restaurantes) > 0:
+        print(*lista_restaurantes, sep='\n')
+    else:
+        print('Não há restaurantes cadastrados')
+    voltar_menu_inicial()
+
 def sair_do_app():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print('Saindo do programa')
 
 def escolher_opcao():
@@ -33,7 +67,11 @@ def escolher_opcao():
         option_menu = int(input('Digite a opção: '))
         match(option_menu):
             case 1:
-                print (f'\nOpção escolhida: {option_menu}')
+                cadastrar_restaurante()
+            case 2:
+                listar_restaurantes()
+            case 3:
+                print(f'\nOpção escolhida: {option_menu}')
             case 4:
                 sair_do_app()
             case _:
