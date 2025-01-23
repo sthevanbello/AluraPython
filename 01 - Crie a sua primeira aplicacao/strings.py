@@ -1,6 +1,6 @@
 import os
 
-lista_restaurantes = []
+lista_restaurantes = ['Krusty burger', 'Bar do Moe']
 
 def exibir_titulo():
     print('''
@@ -23,23 +23,32 @@ def exibir_menu():
     print('4 - Sair\n')
 
 def opcao_invalida():
-    print(f'Opção inválida')
+    print(f'Opção inválida! Voltand ao menu inicial')
     voltar_menu_inicial()
 
 
 def cadastrar_restaurante():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    exibir_titulo()
-    print('\nCadastro de restaurante\n')
-    print('*'*50)
-    restaurante = input('\nDigite o nome do restaurante: ')
-    lista_restaurantes.append(restaurante)
-    if len(lista_restaurantes) > 0:
-        print('\nRestaurante cadastrado com sucesso!\n')
-        voltar_menu_inicial()
-    else:
-        print('Tente novamente')
-        cadastrar_restaurante()
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        exibir_titulo()
+        print('\nCadastro de restaurante\n')
+        print('*'*50)
+        restaurante = input('\nDigite o nome do restaurante: ')
+        lista_restaurantes.append(restaurante)
+        if len(lista_restaurantes) > 0:
+            print(f'\no restaurante: {restaurante} foi cadastrado com sucesso!\n')
+        else:
+            print('Tente novamente')
+            cadastrar_restaurante()
+
+        opcao = input('\nDeseja cadastrar mais um restaurante? S ou N: ')
+        if opcao == 'N' or opcao == 'n':
+            voltar_menu_inicial()
+            break
+        elif opcao == 'S' or opcao == 's':
+            continue
+        else:
+            opcao_invalida()
 
 def voltar_menu_inicial():
     print('*'*50)
@@ -53,7 +62,9 @@ def listar_restaurantes():
     print('Restaurantes cadastrados')
     print('-'*50)
     if len(lista_restaurantes) > 0:
-        print(*lista_restaurantes, sep='\n')
+        # print(*lista_restaurantes, sep='\n')
+        for item, restaurante in enumerate(lista_restaurantes):
+            print(f'{item+1} - {restaurante}')
     else:
         print('Não há restaurantes cadastrados')
     voltar_menu_inicial()
