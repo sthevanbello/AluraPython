@@ -3,6 +3,7 @@ import os
 lista_restaurantes = ['Krusty burger', 'Bar do Moe']
 
 def exibir_titulo():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print('''
 ░██████╗░█████╗░██████╗░░█████╗░██████╗░  ███████╗██╗░░██╗██████╗░██████╗░███████╗░██████╗░██████╗
 ██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗  ██╔════╝╚██╗██╔╝██╔══██╗██╔══██╗██╔════╝██╔════╝██╔════╝
@@ -23,20 +24,24 @@ def exibir_menu():
     print('4 - Sair\n')
 
 def opcao_invalida():
-    print(f'Opção inválida! Voltand ao menu inicial')
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f'Opção inválida! Voltando ao menu inicial')
     voltar_menu_inicial()
 
-
+def exibir_titulo_submenu(texto):
+    exibir_titulo()
+    print('*'*50)
+    print(f'\n{texto}\n')
+    print('-'*50)
+    
 def cadastrar_restaurante():
     while True:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        exibir_titulo()
-        print('\nCadastro de restaurante\n')
-        print('*'*50)
-        restaurante = input('\nDigite o nome do restaurante: ')
+        
+        exibir_titulo_submenu('Cadastro de restaurante')
+        restaurante = input('Digite o nome do restaurante: ')
         lista_restaurantes.append(restaurante)
         if len(lista_restaurantes) > 0:
-            print(f'\no restaurante: {restaurante} foi cadastrado com sucesso!\n')
+            print(f'\nO restaurante: {restaurante} foi cadastrado com sucesso!\n')
         else:
             print('Tente novamente')
             cadastrar_restaurante()
@@ -49,18 +54,15 @@ def cadastrar_restaurante():
             continue
         else:
             opcao_invalida()
+            break
 
 def voltar_menu_inicial():
     print('*'*50)
-    input(f'\nAperte Enter para voltar ao menu inicial')
+    input(f'\nAperte Enter para voltar ao menu inicial ')
     main()
 
 def listar_restaurantes():
-    os.system('cls' if os.name == 'nt' else 'clear')
-    exibir_titulo()
-    print('*'*50)
-    print('Restaurantes cadastrados')
-    print('-'*50)
+    exibir_titulo_submenu('Restaurantes cadastrados')
     if len(lista_restaurantes) > 0:
         # print(*lista_restaurantes, sep='\n')
         for item, restaurante in enumerate(lista_restaurantes):
@@ -94,11 +96,9 @@ def escolher_opcao():
 
 
 def main():
-    os.system('cls' if os.name == 'nt' else 'clear')
     exibir_titulo()
     exibir_menu()
     escolher_opcao()
-    
 
 if __name__ == '__main__':
     main()
