@@ -36,7 +36,6 @@ def exibir_titulo_submenu(texto):
     
 def cadastrar_restaurante():
     while True:
-        
         exibir_titulo_submenu('Cadastro de restaurante')
         restaurante = input('Digite o nome do restaurante: ')
         lista_restaurantes.append(restaurante)
