@@ -7,6 +7,8 @@ lista_restaurantes = [
                         {'nome': 'Pizza Planet', 'categoria': 'Fast food', 'ativo': False}
                     ]
 
+lista_estados = ['Ativo', 'Inativo']
+    
 def exibir_titulo():
     os.system('cls' if os.name == 'nt' else 'clear')
     print('''
@@ -22,9 +24,9 @@ def exibir_menu():
 
     separar_linha('-')
     print(f'Menu')
-    print('1 - Cadastrar restaurantes')
+    print('1 - Cadastrar restaurante')
     print('2 - Listar restaurantes')
-    print('3 - Ativar restaurantes')
+    print('3 - Alterar estado do restaurante')
     separar_linha('-')
     print('4 - Sair\n')
 
@@ -84,36 +86,52 @@ def separar_linha(caracter):
     print(f'{caracter}'*100)
     print()
 
-def ativar_restaurante():
-    exibir_titulo_submenu('Ativar restaurante')
+def alterar_restaurante():
+    exibir_titulo_submenu('Alterar o estado do restaurante')
+    try:
+        for item, estado in enumerate(lista_estados):
+            print(f'{item+1} - {estado}')
+        separar_linha('-')
+        opcao = int(input('Deseja alterar o estado para qual modo? '))
+        alterar_estado_restaurante(lista_estados[opcao-1])
+    except:
+        opcao_invalida()
+        alterar_restaurante()
+
+def alterar_estado_restaurante(estado):
+    exibir_titulo_submenu(f'Alterar estado do restaurante para {estado}')
     listar_restaurantes()
     try:
-        opcao = int(input('Digite o número do restaurante que será ativado ou 0 (zero) para sair: '))
+        opcao = int(input('Digite o número do restaurante que terá seu estado alterado ou 0 (zero) para sair: '))
         if opcao == 0:
             voltar_menu_inicial()
         elif opcao > 0 and len(lista_restaurantes) >= opcao:
             restaurante = lista_restaurantes[opcao-1]
-            if True in restaurante.values():
+            estado_atual = False
+            if estado == 'Ativo':
+                estado_atual = True
+                
+            if estado_atual in restaurante.values():
                 separar_linha('-')
-                print(f'\nRestaurante já está ativo!\n')
+                print(f'\nRestaurante já está com o estado {estado}!\n')
                 separar_linha('-')
                 input('Aperte Enter para continuar ')
             else:
-                restaurante['ativo'] = True
-                if True in restaurante.values():
+                restaurante['ativo'] = estado_atual
+                if estado_atual in restaurante.values():
                     separar_linha('-')
-                    print(f'Restaurante {restaurante['nome']} ativado com sucesso!')
+                    print(f'Restaurante {restaurante['nome']} alterado com sucesso!')
                     separar_linha('-')
                     input('Aperte Enter para continuar ')
                 else:
                     separar_linha('-')
                     input('Aperte Enter para tentar novamente ')
-            ativar_restaurante()
+            alterar_estado_restaurante(estado)
         else:
             opcao_invalida()
             separar_linha('-')
             input('Aperte Enter para tentar novamente ')
-            ativar_restaurante()
+            alterar_estado_restaurante(estado)
     except Exception as e:
         opcao_invalida()
         separar_linha('-')
@@ -135,7 +153,7 @@ def escolher_opcao():
                 listar_restaurantes()
                 voltar_menu_inicial()
             case 3:
-                ativar_restaurante()
+                alterar_restaurante()
             case 4:
                 sair_do_app()
             case _:
