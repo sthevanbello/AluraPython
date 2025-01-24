@@ -42,7 +42,15 @@ def exibir_titulo_submenu(texto):
     separar_linha('-')
     
 def cadastrar_restaurante():
-    exibir_titulo()
+    '''Função responsável por cadastrar um novo restaurante
+
+    Inputs: 
+    - Nome do restaurante
+    - Categoria do restaurante
+
+    Output:
+    - Adiciona um novo restaurante à lista de restaurantes
+    '''
     exibir_titulo_submenu('Cadastro de restaurante')
     while True:
         nome_restaurante = input('Digite o nome do restaurante: ')
@@ -106,9 +114,11 @@ def listar_restaurantes(estado_solicitado = None):
 
 def exibir_lista_restaurantes(lista):
     if len(lista) > 0:
+        print(f'{'Id'.ljust(5)}{'Nome'.ljust(30)}{'Categoria'.ljust(30)}Estado')
+        separar_linha('.')
         for restaurante in lista:
             estado = 'Ativo' if restaurante['ativo'] else 'Inativo'
-            print(f'Id: {restaurante['id']} - Nome: {restaurante['nome']:30}Categoria: {restaurante['categoria']:30}Estado: {estado}')
+            print(f'{str(restaurante['id']).ljust(5)}{restaurante['nome'].ljust(30)}{restaurante['categoria'].ljust(30)}{estado}')
     else:
         print('Não há restaurantes')
     
