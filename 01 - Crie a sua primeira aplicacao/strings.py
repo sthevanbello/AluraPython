@@ -1,6 +1,7 @@
 import os
 
-lista_restaurantes = ['Krusty burger', 'Bar do Moe']
+# lista_restaurantes = ['Krusty burger', 'Bar do Moe']
+lista_restaurantes = [{'Krusty burger': True}, {'Bar do Moe': True}, {'Pizza Planet': False}]
 
 def exibir_titulo():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -25,8 +26,7 @@ def exibir_menu():
 
 def opcao_invalida():
     os.system('cls' if os.name == 'nt' else 'clear')
-    print(f'Opção inválida! Voltando ao menu inicial')
-    voltar_menu_inicial()
+    print(f'Opção inválida!')
 
 def exibir_titulo_submenu(texto):
     exibir_titulo()
@@ -36,11 +36,11 @@ def exibir_titulo_submenu(texto):
     
 def cadastrar_restaurante():
     while True:
-        exibir_titulo_submenu('Cadastro de restaurante')
-        restaurante = input('Digite o nome do restaurante: ')
+        nome_restaurante = input('Digite o nome do restaurante: ')
+        restaurante = {nome_restaurante: False}
         lista_restaurantes.append(restaurante)
-        if len(lista_restaurantes) > 0:
-            print(f'\nO restaurante: {restaurante} foi cadastrado com sucesso!\n')
+        if restaurante in lista_restaurantes:
+            print(f'\nO restaurante: {nome_restaurante} foi cadastrado com sucesso!\n')
         else:
             print('Tente novamente')
             cadastrar_restaurante()
@@ -53,23 +53,64 @@ def cadastrar_restaurante():
             continue
         else:
             opcao_invalida()
+            voltar_menu_inicial()
             break
 
 def voltar_menu_inicial():
-    print('*'*50)
     input(f'\nAperte Enter para voltar ao menu inicial ')
     main()
 
 def listar_restaurantes():
-    exibir_titulo_submenu('Restaurantes cadastrados')
     if len(lista_restaurantes) > 0:
         # print(*lista_restaurantes, sep='\n')
         for item, restaurante in enumerate(lista_restaurantes):
-            print(f'{item+1} - {restaurante}')
+            for nome, ativo in restaurante.items():
+                descricao = 'Inativo'
+                if ativo:
+                    descricao = 'Ativo'
+                print(f'{item+1} - {nome}: {descricao}')
+        print('-'*50)
+        print()
     else:
         print('Não há restaurantes cadastrados')
-    voltar_menu_inicial()
 
+def ativar_restaurante():
+    exibir_titulo_submenu('Ativar restaurante')
+    listar_restaurantes()
+    try:
+        opcao = int(input('Digite o número do restaurante que será ativado ou 0 (zero) para sair: '))
+        if opcao == 0:
+            voltar_menu_inicial()
+        elif opcao > 0 and len(lista_restaurantes) >= opcao:
+            restaurante = lista_restaurantes[opcao-1]
+            if True in restaurante.values():
+                print('-'*50)
+                print(f'\nRestaurante já está ativo!\n')
+                print('-'*50)
+                input('Aperte Enter para continuar ')
+            else:
+                for nome, ativo in restaurante.items():
+                    restaurante[nome] = True
+                    if True in restaurante.values():
+                        print('-'*50)
+                        print(f'Restaurante {nome} ativado com sucesso!')
+                        print('-'*50)
+                        input('Aperte Enter para continuar ')
+                    else:
+                        print('-'*50)
+                        input('Aperte Enter para tentar novamente ')
+            ativar_restaurante()
+        else:
+            opcao_invalida()
+            print('-'*50)
+            input('Aperte Enter para tentar novamente ')
+            ativar_restaurante()
+    except Exception as e:
+        opcao_invalida()
+        print('-'*50)
+        input('Aperte Enter para tentar novamente ')
+        ativar_restaurante()
+        
 def sair_do_app():
     os.system('cls' if os.name == 'nt' else 'clear')
     print('Saindo do programa')
@@ -79,17 +120,22 @@ def escolher_opcao():
         option_menu = int(input('Digite a opção: '))
         match(option_menu):
             case 1:
+                exibir_titulo_submenu('Cadastro de restaurante')
                 cadastrar_restaurante()
             case 2:
+                exibir_titulo_submenu('Restaurantes cadastrados')
                 listar_restaurantes()
+                voltar_menu_inicial()
             case 3:
-                print(f'\nOpção escolhida: {option_menu}')
+                ativar_restaurante()
             case 4:
                 sair_do_app()
             case _:
                 opcao_invalida()
-    except:
-        opcao_invalida()
+                voltar_menu_inicial()
+    except Exception as e:
+        opcao_invalida(e)
+        voltar_menu_inicial()
 
 
 
