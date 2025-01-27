@@ -44,8 +44,9 @@ class Restaurante:
         self._ativo = not self._ativo
 
     def receber_avaliacao(self, cliente, nota):
-        avaliacao = Avaliacao(cliente, nota)
-        self._avaliacoes.append(avaliacao)
+        if 0 < nota <= 5:
+            avaliacao = Avaliacao(cliente, nota)
+            self._avaliacoes.append(avaliacao)
 
     def listar_avaliacoes(self):
         print(f'{'Cliente'.ljust(30)}{'Avaliação'}')
@@ -56,7 +57,7 @@ class Restaurante:
     @property
     def calcular_media_avaliacoes(self):
         if(len(self._avaliacoes) == 0):
-            return 0
+            return '-'
         # soma=0
         # for avaliacao in self._avaliacoes:
         #     soma += avaliacao._nota
