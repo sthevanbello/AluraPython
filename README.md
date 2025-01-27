@@ -13,3 +13,11 @@
 - Entenda como as propriedades como elas podem conter lógica adicional além de simplesmente acessar e atribuir valores
 - Compreenda como as classes no Python podem organizar e estruturar seu código de forma eficiente
 - Aprenda a usar o construtor para inicializar objetos e definir seus estados iniciais
+
+## Curso 3: Avance na Orientação a Objetos e consuma API
+
+- Implemente herança e classes abstratas
+- Domine o conceito de polimorfismo
+- Aprenda como integrar seus projetos com aplicações externas
+- Entenda como criar arquivos JSON com Python de forma prática
+- Crie e ative ambientes virtuais em Python
