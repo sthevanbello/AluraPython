@@ -12,6 +12,8 @@ def separar_linha(caracter):
 restaurante_moe = Restaurante('bar do Moe', 'boteco')
 bebida = Bebida('Cerveja duff', 5.00, 'Média')
 prato = Prato('Macarronada', 25.00, 'Macarronada com salsicha')
+prato.aplicar_desconto()
+bebida.aplicar_desconto()
 restaurante_moe.adicionar_item_ao_cardapio(bebida)
 restaurante_moe.adicionar_item_ao_cardapio(prato)
 
