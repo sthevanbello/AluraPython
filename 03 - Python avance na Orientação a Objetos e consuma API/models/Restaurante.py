@@ -1,6 +1,7 @@
 import random
 from models.Avaliacao import Avaliacao
 from models.Cardapio.item_cardapio import ItemCardapio
+from models.Cardapio.Sobremesa import Sobremesa
 class Restaurante:
     '''Classe de criação de restaurante 
     Inputs:
@@ -74,4 +75,11 @@ class Restaurante:
         print('-'*100)
         print('Item'.ljust(6),'Nome'.ljust(29), 'Preço'.ljust(29), 'Descrição/Tamanho')
         for item, item_cardapio in enumerate(self._cardapio, start=1):
-            print(f'{str(item).ljust(7)}{item_cardapio}')
+            if not isinstance(item_cardapio, Sobremesa):
+                print(f'{str(item).ljust(7)}{item_cardapio}')
+            else:
+                print('-'*100)
+                print('Sobremesa\n')
+                print('Item'.ljust(6),'Nome'.ljust(29), 'Preço'.ljust(29), 'Descrição'.ljust(29), 'Tipo'.ljust(29), 'Tamanho'.ljust(29))
+                print(f'{str(item).ljust(7)}{item_cardapio}')
+                print('-'*100)
