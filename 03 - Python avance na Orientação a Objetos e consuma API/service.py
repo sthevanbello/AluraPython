@@ -10,18 +10,23 @@ def separar_linha(caracter):
     print('')
 
 restaurante_moe = Restaurante('bar do Moe', 'boteco')
-
 bebida = Bebida('Cerveja duff', 5.00, 'Média')
 prato = Prato('Macarronada', 25.00, 'Macarronada com salsicha')
+restaurante_moe.adicionar_item_ao_cardapio(bebida)
+restaurante_moe.adicionar_item_ao_cardapio(prato)
+
+# os.system('cls' if os.name == 'nt' else 'clear')
+# separar_linha('=')
+# print(f'Nome'.ljust(30), 'Preço'.ljust(30), 'Descrição/Tamanho')
+# separar_linha('-')
+# print(bebida)
+# print(prato)
+# separar_linha('=')
 
 os.system('cls' if os.name == 'nt' else 'clear')
-separar_linha('=')
-print(f'Nome'.ljust(30), 'Preço'.ljust(30), 'Descrição/Tamanho')
-separar_linha('-')
-print(bebida)
-print(prato)
-separar_linha('=')
-
+# separar_linha('=')
+# print(*restaurante_moe._cardapio, sep='\n')
+restaurante_moe.listar_restaurante_cardapio();
 
 
 def main():
