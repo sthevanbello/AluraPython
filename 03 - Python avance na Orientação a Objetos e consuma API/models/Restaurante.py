@@ -1,6 +1,6 @@
 import random
 from models.Avaliacao import Avaliacao
-from models.Cardapio.itens_cardapio import ItemCardapio
+from models.Cardapio.item_cardapio import ItemCardapio
 class Restaurante:
     '''Classe de criação de restaurante 
     Inputs:
